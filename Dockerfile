@@ -11,6 +11,9 @@ ARG GID=1000
 # ==============================================================================
 FROM eclipse-temurin:${JAVA_VERSION}-jdk-jammy AS base
 
+ARG UID=1000
+ARG GID=1000
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV DEBIAN_FRONTEND=noninteractive
