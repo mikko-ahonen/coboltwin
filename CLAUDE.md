@@ -43,17 +43,14 @@ The phases are:
 
 concept → design → prototype → implement → testing → userguide → e2e → landing → training
 
-There are specific instructions for each phase. Look the corresponding instructions when doing such changes.
+There are specific instructions for each phase in `docs/claude/`. Look the corresponding instructions when doing such changes.
 
-- `docs/concept/concept.md` -- Concept
-- `docs/design/design.md` -- Design
-- `docs/prototype/prototype.md` -- Prototyping
-- `docs/implementation/implementation.md` -- Implementation and unit testing
-- `docs/testing/testing.md` -- Comprehensive integration tests
-- `docs/userguide/userguide.md` -- Creating or updating the user guide for the project or feature
-- `docs/e2e/e2e.md` -- Comprehensive e2e test suite
-- `docs/landing/landing.md` -- Landing page, including short landing page videos
-- `docs/training/training.md` -- Longer training videos and other material
+- `docs/claude/concept.md` -- Concept phase instructions
+- `docs/claude/design.md` -- Design phase instructions
+- `docs/claude/prototype.md` -- Prototyping phase instructions
+- `docs/claude/implementation.md` -- Implementation and unit testing phase instructions
+- `docs/claude/testing.md` -- Integration testing phase instructions
+- `docs/claude/e2e.md` -- E2E testing phase instructions
 
 ## Tickets
 
