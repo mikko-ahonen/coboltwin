@@ -14,5 +14,7 @@ services:
     volumes:
       - ./:/src
       - ../../.workspaces/coboltwin:/workspaces
+      - ~/.ssh/id_ed25519:/home/dev/.ssh/id_ed25519:ro
+      - ~/.ssh/known_hosts:/home/dev/.ssh/known_hosts:ro
     environment:
       - CLAUDE_CONFIG_DIR=/workspaces/claude

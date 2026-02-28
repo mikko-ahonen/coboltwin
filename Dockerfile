@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     curl \
     ca-certificates \
     git \
+    openssh-client \
     vim \
     less \
     make \
@@ -89,6 +90,7 @@ RUN curl -fsSL https://claude.ai/install.sh | bash \
     && echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$BASH_ENV"
 
 # Git configuration
-RUN echo 'git config --global --add safe.directory /src' >> "$BASH_ENV"
+RUN echo 'git config --global core.sshCommand "ssh -i /home/dev/.ssh/id_ed25519"' >> "$BASH_ENV" \
+    && echo 'git config --global --add safe.directory /src' >> "$BASH_ENV"
 
 CMD ["bash"]

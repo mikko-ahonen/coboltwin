@@ -1,5 +1,6 @@
 # Telamon-generated screenrc for coboltwin
 startup_message off
 autodetach on
+escape ^@@
 defscrollback 4098
 vbell off
