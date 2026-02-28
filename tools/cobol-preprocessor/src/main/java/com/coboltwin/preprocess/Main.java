@@ -22,7 +22,7 @@ public class Main {
         File input = new File(args[0]);
         Path outputCore = Path.of(args[1]);
 
-        // Parse with ProLeap (runs COBOL preprocessing too). For mainframe sources, FIXED is typical.
+        // Parse with ProLeap. Mainframe sources use FIXED column format.
         Program program = new CobolParserRunnerImpl().analyzeFile(input, CobolSourceFormatEnum.FIXED);
 
         // ProLeap compilation unit naming is: Capitalized filename without extension.
@@ -48,8 +48,9 @@ public class Main {
     }
 
     private static String transform(String src) {
-        // Replace packed decimals to DISPLAY to simplify mocking on Linux
-        src = src.replaceAll("(?i)\\bCOMP-3\\b", "DISPLAY");
+        // Replace packed decimals with DISPLAY SIGN LEADING SEPARATE so
+        // the test wrapper can pass flat-file data with a readable sign character.
+        src = src.replaceAll("(?i)\\bCOMP-3\\b", "DISPLAY SIGN LEADING SEPARATE");
 
         // Replace the mainframe DL/I dispatcher with a test stub call (simple signature)
         src = src.replaceAll("(?i)CALL\\s+['\\\"]CBLTDLI['\\\"]\\s+USING\\s+WS-SEGMENT", "CALL 'DLI-STUB' USING WS-SEGMENT");
@@ -59,6 +60,23 @@ public class Main {
 
         // Defensive: strip SQLCA include (if any)
         src = src.replaceAll("(?is)\\bEXEC\\s+SQL\\s+INCLUDE\\s+SQLCA\\s+END-EXEC\\b\\.?\\s*", "");
+
+        // Strip ProLeap EXEC SQL comment markers
+        src = src.replaceAll("(?m)^\\s*\\*>EXECSQL.*$", "");
+
+        // Remove SQLCODE-driven PERFORM loop -- the wrapper calls us once per record
+        src = src.replaceAll("(?is)\\bPERFORM\\s+UNTIL\\s+SQLCODE\\s*=\\s*\\d+\\b", "");
+        src = src.replaceAll("(?is)\\bEND-PERFORM\\b\\.?", "");
+
+        // Replace STOP RUN with GOBACK (called as subroutine from wrapper)
+        src = src.replaceAll("(?i)\\bSTOP\\s+RUN\\b", "GOBACK");
+
+        // Convert WORKING-STORAGE fields to LINKAGE SECTION so the wrapper can
+        // pass data in via CALL ... USING.
+        src = src.replaceAll("(?i)WORKING-STORAGE SECTION\\.", "LINKAGE SECTION.");
+        src = src.replaceAll("(?i)(\\bPROCEDURE DIVISION)\\.",
+                "$1 USING WS-CUST-ID WS-NAME WS-BALANCE\n"
+              + "                     WS-STATUS WS-SEGMENT.");
 
         return src;
     }
