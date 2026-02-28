@@ -1,2 +1,8 @@
 .env.dev
 .env.claude
+
+# Build artifacts
+build/
+**/target/
+db2_in.dat
+db2_out.dat
