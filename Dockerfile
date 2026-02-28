@@ -3,7 +3,6 @@
 # Legacy stack: GnuCOBOL + Java/Maven + Python
 
 ARG JAVA_VERSION=21
-ARG PYTHON_VERSION=3.12
 ARG UID=1000
 ARG GID=1000
 
@@ -21,8 +20,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     gnucobol \
     libcob4-dev \
     maven \
-    python${PYTHON_VERSION} \
-    python${PYTHON_VERSION}-venv \
+    python3 \
+    python3-venv \
     python3-pip \
     curl \
     ca-certificates \
