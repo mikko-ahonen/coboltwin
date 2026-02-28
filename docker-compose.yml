@@ -1,0 +1,18 @@
+# Telamon-generated docker-compose.yml for coboltwin
+
+services:
+
+  claude:
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: claude
+
+
+    volumes:
+      - ./:/src
+      - ../../.workspaces/coboltwin:/workspaces
+    environment:
+      - CLAUDE_CONFIG_DIR=/workspaces/claude
