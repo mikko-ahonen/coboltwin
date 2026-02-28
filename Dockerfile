@@ -85,7 +85,7 @@ RUN echo 'export NVM_DIR="$HOME/.nvm"' >> "$BASH_ENV" \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> "$BASH_ENV"
 
 # Install Claude Code natively
-RUN curl -fsSL https://claude.ai/install.sh | sh \
+RUN curl -fsSL https://claude.ai/install.sh | bash \
     && echo 'export PATH="$HOME/.claude/bin:$PATH"' >> "$BASH_ENV"
 
 # Git configuration
